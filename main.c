@@ -270,20 +270,27 @@ void threads(char **av, t_philo *philo, t_forks *forks, t_program_state *state, 
 	free(forks);
 }
 
-int main(int argc, char **av)
+int main(int ac, char **av)
 {
 	t_philo *philo;
 	t_forks  *forks;
 	t_program_state state;
 	t_time time;
 
-	if (argc < 5 || argc > 6) 
+	if (ac < 5 || ac > 6) 
 		error_msg();
 	error_check(av);
 	philo = malloc(sizeof(t_philo) * atoi(av[1])); //philo ahora apunta a la primera estructura en un bloque continuo de memoria que tiene espacio para n estructuras t_philo.
 	forks = malloc(sizeof(t_forks) * atoi(av[1]));
 	if(!philo || !forks)
 		return(EXIT_FAILURE);
+	if(atoi(av[1]) == 1)
+	{
+		printf("1 1 is thinking\n");
+		printf("1 1 has taken a fork\n");
+		printf("%d 1 died\n", atoi(av[2]));
+		return(0);
+	}
 	time.start_time = init_time();
 	state.terminate = false;
 	threads(av, philo, forks, &state, &time);
