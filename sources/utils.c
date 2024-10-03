@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:32:23 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/03 13:12:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/03 16:15:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,17 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-//free
-
+void ft_free(t_philo *philo, t_forks *forks)
+{
+	int i;
+	
+	i= -1;
+	while (++i < philo->amount_philo)
+	{
+		pthread_mutex_destroy(&philo[i].lock);
+		if (&philo[i].left_fork)
+			pthread_mutex_destroy(&philo[i].left_fork->lock);
+	}
+	free(philo);
+	free(forks);
+}

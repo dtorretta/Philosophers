@@ -63,6 +63,7 @@ typedef struct s_philo
 	bool			terminate;
 	t_program_state	*status;
 	t_time			*time;
+	pthread_mutex_t	lock; //VER
 }	t_philo;
 
 /*ERRORS*/
@@ -72,14 +73,14 @@ void	error_check(char **av);
 
 /*INIT*/
 void	init_philo(t_philo *philo, t_forks *forks, int i);
-void	init_data(char **av, t_philo *philo);
+void	init_data(char **av, t_philo *philo, t_forks *forks);
 long	init_time(void);
 long	get_time(t_time *time);
 
 /*UTILS*/
 int		ft_atoi(const char *nptr);
 void	ft_putendl_fd(char *s, int fd);
-//FREE
+void    ft_free(t_philo *philo, t_forks *forks);
 
 /*ONE PHILO*/
 int		one_philo(t_philo *philo, t_forks *forks);
