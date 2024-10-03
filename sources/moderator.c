@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   moderator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:42:12 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/09/03 18:06:50 by dtorrett         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:12:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 static int	check_death(t_philo *philo)
 {

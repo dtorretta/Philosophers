@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:39:04 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/09/03 18:16:32 by dtorrett         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:33:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 //Before each movement, it checks if the moderator has set the termination flag.
 //If the flag is false, it continues until it has taken both forks and eaten.
@@ -19,7 +19,7 @@ static int	ft_eat(t_philo *philo, t_program_state *state)
 {
 	pthread_mutex_lock(&philo->right_fork->lock);
 	if (state->terminate)
-		//After eatingreturn (1);
+		return (1);
 	printf("%ld %d has taken a fork\n", get_time(philo->time), philo->id );
 	if (state->terminate)
 		return (1);
@@ -57,7 +57,7 @@ static void	*ft_routine(t_philo *philo)
 		if (state->terminate)
 			break ;
 		printf("%ld %d is sleeping\n", get_time(philo->time), philo->id);
-		usleep(philo->sleep * 1000);
+		usleep(philo->sleep * 1000); //que pasa si muere mientras duerme??
 		if (state->terminate)
 			break ;
 		printf("%ld %d is thinking\n", get_time(philo->time), philo->id);
@@ -76,6 +76,7 @@ void	*ft_philosopher(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	//printf("check 07! philo->eat: %d\n", philo->eat); //borrar
 	printf("%ld %d is thinking\n", get_time(philo->time), philo->id);
 	if (philo->amount_philo % 2 == 0)
 	{
@@ -87,6 +88,14 @@ void	*ft_philosopher(void *arg)
 		if (philo->id % 2 == 0)
 			return (ft_routine(philo));
 	}
+	//printf("%ld %d WILL SLEEP\n", get_time(philo->time), philo->id); //borrar
+	//printf("check 08! philo->eat: %d\n", philo->eat); //borrar
+	//printf("TIME eating %d\n", philo->eat); //borrar
+	//int time  = philo->eat * 1000; //borrar
+	//printf("TIME SLEEPING %d\n", time); //borrar
+	//usleep(time);
 	usleep(philo->eat * 1000);
+	//printf("%ld %d POST SLEEP\n", get_time(philo->time), philo->id); //borrar
+	//exit (2); //borrar
 	return (ft_routine(philo));
 }

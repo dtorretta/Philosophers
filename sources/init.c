@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:40:53 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/09/03 18:21:39 by dtorrett         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:24:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	init_philo(t_philo *philo, t_forks *forks, int i)
 {
@@ -19,20 +18,29 @@ void	init_philo(t_philo *philo, t_forks *forks, int i)
 	philo[i].meals = 0;
 	philo[i].last_meal_time = 0;
 	philo[i].right_fork = &forks[i];
-	philo[i].left_fork = &forks[(i + 1) % philo[i].amount_philo];
+	//philo[i].left_fork = &forks[(i + 1) % philo[i].amount_philo];
+	philo[i].left_fork = &forks[(i + 1) % philo->amount_philo];
 	philo[i].terminate = false;
 }
 
-void	init_data(char **av, t_philo *philo, t_forks *forks)
+void	init_data(char **av, t_philo *philo)
 {
-	philo->amount_philo = atoi(av[1]);
-	philo->die = atoi(av[2]);
-	philo->eat = atoi(av[3]);
-	philo->sleep = atoi(av[4]);
-	if (av[5])
-		philo->q = atoi(av[5]);
-	else
-		philo->q = -1;
+	int i;
+	int amount;
+	
+	i = -1;
+	amount = atoi(av[1]);
+	while (++i < amount)
+	{
+		philo[i].amount_philo = amount;
+		philo[i].die = atoi(av[2]);
+		philo[i].eat = atoi(av[3]);
+		philo[i].sleep = atoi(av[4]);
+		if (av[5])
+			philo[i].q = atoi(av[5]);
+		else
+			philo[i].q = -1;
+	}
 }
 
 long	init_time(void)

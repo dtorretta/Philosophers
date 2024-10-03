@@ -72,7 +72,7 @@ void	error_check(char **av);
 
 /*INIT*/
 void	init_philo(t_philo *philo, t_forks *forks, int i);
-void	init_data(char **av, t_philo *philo, t_forks *forks);
+void	init_data(char **av, t_philo *philo);
 long	init_time(void);
 long	get_time(t_time *time);
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   one_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:34:47 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/09/03 17:44:28 by dtorrett         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:12:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 static void	*mini_philo(void *arg)
 {
