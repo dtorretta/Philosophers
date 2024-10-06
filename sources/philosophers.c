@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:39:04 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/06 18:07:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/06 18:19:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ static int	ft_eat(t_philo *philo, t_program_state *state)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->left_fork->lock);
+		usleep(100); //ver
 		pthread_mutex_unlock(&philo->right_fork->lock);
 	}
 	else
 	{
 		pthread_mutex_unlock(&philo->right_fork->lock);
+		usleep(100); //ver
 		pthread_mutex_unlock(&philo->left_fork->lock);
 	}	
 	return (0);

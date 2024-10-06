@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 18:29:14 by dtorrett          #+#    #+#              #
-#    Updated: 2024/10/06 17:33:39 by marvin           ###   ########.fr        #
+#    Updated: 2024/10/06 18:27:36 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME = philo
 
 # Compiler and Flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
-#-fsanitize=thread
-#-fsanitize=address
+
+# add -fsanitize=thread or -fsanitize=address to check data races
+CFLAGS = -Wall -Wextra -Werror
 
 # Includes
 INC		= -I ./includes
