@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:42:12 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/03 16:15:24 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/06 17:43:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,43 @@ static int	check_death(t_philo *philo)
 	while (++i < philo->amount_philo) 
 	{
 		current_time = get_time(philo->time);
+		pthread_mutex_lock(&philo[i].lock);
 		if ((current_time - philo[i].last_meal_time) >= philo->die)
 		{
+			pthread_mutex_lock(&philo->status->lock);
 			philo->status->terminate = true;
+			pthread_mutex_unlock(&philo->status->lock);
+			
 			printf("%ld %d died\n", get_time(philo->time), philo[i].id);
+			pthread_mutex_unlock(&philo[i].lock);
 			return (1);
 		}
+		pthread_mutex_unlock(&philo[i].lock);
+	}
+	return (0);
+}
+
+static int	check_meals(t_philo *philo)
+{
+	int		i;
+	
+	i = -1;
+	while (philo->q > 0 && ++i < philo->amount_philo)
+	{
+		pthread_mutex_lock(&philo[i].lock); // Proteger el acceso a meals VEEEER
+		if (philo[i].meals < philo->q)
+		{
+			pthread_mutex_unlock(&philo[i].lock);
+			break ;
+		}
+		pthread_mutex_unlock(&philo[i].lock);
+	}
+	if (philo->q > 0 && i == philo->amount_philo)
+	{
+		pthread_mutex_lock(&philo->status->lock);
+		philo->status->terminate = true;
+		pthread_mutex_unlock(&philo->status->lock);
+		return (1);
 	}
 	return (0);
 }
@@ -35,57 +66,19 @@ static int	check_death(t_philo *philo)
 //have eaten enough.
 //if i is equal to the amount of philosophers, that means that all 
 //of them have eaten enough times
-
-// void	*ft_moderator(void *arg)
-// {
-// 	t_philo	*philo;
-// 	int		i;
-// 	philo = (t_philo *)arg;
-// 	while (!philo->status->terminate)
-// 	{
-// 		if (check_death(philo) == 1)
-// 			break ;
-// 		if (philo->status->terminate)
-// 			break ;
-// 		i = -1;
-// 		while (philo->q > 0 && ++i < philo->amount_philo)
-// 		{
-// 			if (philo[i].meals < philo->q)
-// 				break ;
-// 		}
-// 		if (philo->q > 0 && i == philo->amount_philo)
-// 		{
-// 			philo->status->terminate = true;
-// 			break ;
-// 		}
-// 		usleep (100000); //revisa cada segundo //che pero no es un monton?
-// 	}
-// 	return (NULL);
-// }
-
 void	*ft_moderator(void *arg)
 {
 	t_philo	*philo;
-	int		i;
 
 	philo = (t_philo *)arg;
-	while (!philo->status->terminate)
+	while (1)
 	{
-		pthread_mutex_lock(&philo->lock);
-		if (check_death(philo) == 1 || philo->status->terminate)
+		if (check_status2 (philo))
 			break ;
-		i = -1;
-		while (philo->q > 0 && ++i < philo->amount_philo)
-		{
-			if (philo[i].meals < philo->q)
-				break ;
-		}
-		if (philo->q > 0 && i == philo->amount_philo)
-		{
-			philo->status->terminate = true;
+		if (check_death(philo))
+            break ;
+		if (check_meals(philo))
 			break ;
-		}
-		pthread_mutex_unlock(&philo->lock);
 	}
 	return (NULL);
 }

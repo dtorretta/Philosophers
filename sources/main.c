@@ -12,8 +12,7 @@
 
 #include "../includes/philo.h"
 
-static void	threads(t_philo *philo, t_forks *forks, t_program_state *state,
-			t_time *time)
+static void	threads(t_philo *philo, t_forks *forks, t_program_state *state, t_time *time)
 {
 	int			i;
 	pthread_t	moderator_id;

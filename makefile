@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 18:29:14 by dtorrett          #+#    #+#              #
-#    Updated: 2024/10/03 13:32:08 by marvin           ###   ########.fr        #
+#    Updated: 2024/10/06 17:33:39 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,15 @@ NAME = philo
 
 # Compiler and Flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
+#-fsanitize=thread
+#-fsanitize=address
 
 # Includes
 INC		= -I ./includes
 
 # Source files
 SRC_PATH = sources/
-#SRC_SUBDIRS =	$(shell find $(SRC_PATH) -type d)
 SRC_FILES = 	$(SRC_PATH)main.c \
 				$(SRC_PATH)errors.c \
 				$(SRC_PATH)init.c \

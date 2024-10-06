@@ -36,6 +36,7 @@ typedef struct s_time
 typedef struct s_program_state
 {
 	bool	terminate;
+	pthread_mutex_t	lock; //ver
 }	t_program_state;
 
 typedef struct s_forks
@@ -78,6 +79,8 @@ long	init_time(void);
 long	get_time(t_time *time);
 
 /*UTILS*/
+int check_status(t_philo *philo, t_program_state *state, int i);
+int     check_status2(t_philo *philo);
 int		ft_atoi(const char *nptr);
 void	ft_putendl_fd(char *s, int fd);
 void    ft_free(t_philo *philo, t_forks *forks);
