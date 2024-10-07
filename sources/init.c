@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:40:53 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/03 16:16:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 12:35:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_philo(t_philo *philo, t_forks *forks, int i)
 	philo[i].terminate = false;
 }
 
-void	init_data(char **av, t_philo *philo, t_forks *forks)
+void	init_data(char **av, t_philo *philo, t_forks *forks, t_program_state *state)
 {
 	int i;
 	int amount;
@@ -33,6 +33,7 @@ void	init_data(char **av, t_philo *philo, t_forks *forks)
 	{
 		pthread_mutex_init(&philo[i].lock, NULL);
 		pthread_mutex_init(&forks[i].lock, NULL);
+		philo[i].status = state;
 		philo[i].amount_philo = amount;
 		philo[i].die = atoi(av[2]);
 		philo[i].eat = atoi(av[3]);

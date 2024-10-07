@@ -36,7 +36,7 @@ typedef struct s_time
 typedef struct s_program_state
 {
 	bool	terminate;
-	pthread_mutex_t	lock; //ver
+	pthread_mutex_t	lock; //new
 }	t_program_state;
 
 typedef struct s_forks
@@ -74,19 +74,19 @@ void	error_check(char **av);
 
 /*INIT*/
 void	init_philo(t_philo *philo, t_forks *forks, int i);
-void	init_data(char **av, t_philo *philo, t_forks *forks);
+void	init_data(char **av, t_philo *philo, t_forks *forks, t_program_state *state);
 long	init_time(void);
 long	get_time(t_time *time);
 
 /*UTILS*/
-int check_status(t_philo *philo, t_program_state *state, int i);
+int     check_status(t_philo *philo, t_program_state *state, int i);
 int     check_status2(t_philo *philo);
 int		ft_atoi(const char *nptr);
 void	ft_putendl_fd(char *s, int fd);
-void    ft_free(t_philo *philo, t_forks *forks);
+void    ft_free(t_philo *philo, t_forks *forks, t_program_state *state);
 
 /*ONE PHILO*/
-int		one_philo(t_philo *philo, t_forks *forks);
+int	    one_philo(t_philo *philo, t_forks *forks, t_program_state *state);
 
 /*MODERATOR*/
 void	*ft_moderator(void *arg);

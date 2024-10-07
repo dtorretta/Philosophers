@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:42:12 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/06 17:43:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 12:16:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_death(t_philo *philo)
 	long	current_time;
 
 	i = -1;
-	while (++i < philo->amount_philo) 
+	while (++i < philo->amount_philo)
 	{
 		current_time = get_time(philo->time);
 		pthread_mutex_lock(&philo[i].lock);
@@ -26,9 +26,8 @@ static int	check_death(t_philo *philo)
 		{
 			pthread_mutex_lock(&philo->status->lock);
 			philo->status->terminate = true;
-			pthread_mutex_unlock(&philo->status->lock);
-			
 			printf("%ld %d died\n", get_time(philo->time), philo[i].id);
+			pthread_mutex_unlock(&philo->status->lock);
 			pthread_mutex_unlock(&philo[i].lock);
 			return (1);
 		}
@@ -44,7 +43,7 @@ static int	check_meals(t_philo *philo)
 	i = -1;
 	while (philo->q > 0 && ++i < philo->amount_philo)
 	{
-		pthread_mutex_lock(&philo[i].lock); // Proteger el acceso a meals VEEEER
+		pthread_mutex_lock(&philo[i].lock);
 		if (philo[i].meals < philo->q)
 		{
 			pthread_mutex_unlock(&philo[i].lock);
@@ -76,7 +75,7 @@ void	*ft_moderator(void *arg)
 		if (check_status2 (philo))
 			break ;
 		if (check_death(philo))
-            break ;
+			break ;
 		if (check_meals(philo))
 			break ;
 	}

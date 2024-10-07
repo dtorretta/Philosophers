@@ -18,6 +18,7 @@ static void	threads(t_philo *philo, t_forks *forks, t_program_state *state, t_ti
 	pthread_t	moderator_id;
 
 	i = -1;
+	
 	while (++i < philo->amount_philo)
 	{
 		init_philo(philo, forks, i);
@@ -32,14 +33,14 @@ static void	threads(t_philo *philo, t_forks *forks, t_program_state *state, t_ti
 	i = -1;
 	while (++i < philo->amount_philo)
 		pthread_join(philo[i].thread_id, NULL);
-	ft_free(philo, forks);
+	ft_free(philo, forks, state);
 }
 
 int	main(int ac, char **av)
 {
 	t_philo			*philo;
 	t_forks			*forks;
-	t_program_state	state;
+	t_program_state	*state;
 	t_time			time;
 
 	if (ac < 5 || ac > 6) 
@@ -47,13 +48,15 @@ int	main(int ac, char **av)
 	error_check(av);
 	philo = malloc(sizeof(t_philo) * atoi(av[1]));
 	forks = malloc(sizeof(t_forks) * atoi(av[1]));
-	if (!philo || !forks)
+	state = malloc(sizeof(t_program_state)); //no olvidar, si tiene lock tengo que asignarle memoria? 
+	if (!philo || !forks || !state)
 		return (EXIT_FAILURE);
-	init_data(av, philo, forks);
+	init_data(av, philo, forks, state);
+	pthread_mutex_init(&philo->status->lock, NULL);
 	if (atoi(av[1]) == 1)
-		return (one_philo(philo, forks));
+		return (one_philo(philo, forks, state));
 	time.start_time = init_time();
-	state.terminate = false;
-	threads(philo, forks, &state, &time);
+	state->terminate = false;
+	threads(philo, forks, state, &time);
 	return (0);
 }
