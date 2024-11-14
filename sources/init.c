@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:40:53 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/07 12:35:10 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:17:01 by dtorrett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ void	init_philo(t_philo *philo, t_forks *forks, int i)
 	philo[i].terminate = false;
 }
 
-void	init_data(char **av, t_philo *philo, t_forks *forks, t_program_state *state)
+void	init_data(char **av, t_philo *philo, t_forks *forks,
+				t_program_state *state)
 {
-	int i;
-	int amount;
-	
+	int	i;
+	int	amount;
+
 	i = -1;
 	amount = atoi(av[1]);
 	while (++i < amount)

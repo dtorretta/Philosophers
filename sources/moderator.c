@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moderator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:42:12 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/07 12:16:08 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:01:52 by dtorrett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_death(t_philo *philo)
 static int	check_meals(t_philo *philo)
 {
 	int		i;
-	
+
 	i = -1;
 	while (philo->q > 0 && ++i < philo->amount_philo)
 	{

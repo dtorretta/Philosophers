@@ -3,43 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:32:23 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/07 12:05:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:18:02 by dtorrett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int check_status2(t_philo *philo)
+int	check_status2(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->status->lock);
-		if (philo->status->terminate)
-		{
-			pthread_mutex_unlock(&philo->status->lock);
-			return (1);
-		}
+	if (philo->status->terminate)
+	{
 		pthread_mutex_unlock(&philo->status->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->status->lock);
 	return (0);
 }
 
-int check_status(t_philo *philo, t_program_state *state, int i)
+int	check_status(t_philo *philo, t_program_state *state, int i)
 {
 	pthread_mutex_lock(&state->lock);
-		if (state->terminate)
-		{
-			if(i == 1 || i == 3)
-				pthread_mutex_unlock(&philo->left_fork->lock);
-			if(i == 2 || i == 3)
-				pthread_mutex_unlock(&philo->right_fork->lock);
-			pthread_mutex_unlock(&state->lock);
-			return (1);
-		}
+	if (state->terminate)
+	{
+		if (i == 1 || i == 3)
+			pthread_mutex_unlock(&philo->left_fork->lock);
+		if (i == 2 || i == 3)
+			pthread_mutex_unlock(&philo->right_fork->lock);
+		pthread_mutex_unlock(&state->lock);
+		return (1);
+	}
 	pthread_mutex_unlock(&state->lock);
 	return (0);
 }
-
 
 int	ft_atoi(const char *nptr)
 {
@@ -67,29 +66,29 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-void ft_putendl_fd(char *s, int fd)
+void	ft_putendl_fd(char *s, int fd)
 {
-    size_t count;
-    
-    count = 0;
-    if (!s)
-        return;
-    while (s[count])
-        count++;
-    write(fd, s, count);
-    write(fd, "\n", 1);
+	size_t	count;
+
+	count = 0;
+	if (!s)
+		return ;
+	while (s[count])
+		count++;
+	write(fd, s, count);
+	write(fd, "\n", 1);
 }
 
-void ft_free(t_philo *philo, t_forks *forks, t_program_state *state)
+void	ft_free(t_philo *philo, t_forks *forks, t_program_state *state)
 {
-	int i;
-	
-	i= -1;
-	pthread_mutex_destroy(&state->lock); //new
+	int	i;
+
+	i = -1;
+	pthread_mutex_destroy(&state->lock);
 	while (++i < philo->amount_philo)
 	{
 		pthread_mutex_destroy(&philo[i].lock);
-		if (&philo[i].left_fork)
+		if (philo[i].left_fork != NULL)
 			pthread_mutex_destroy(&philo[i].left_fork->lock);
 	}
 	free(state);

@@ -12,13 +12,13 @@
 
 #include "../includes/philo.h"
 
-static void	threads(t_philo *philo, t_forks *forks, t_program_state *state, t_time *time)
+static void	threads(t_philo *philo, t_forks *forks, t_program_state *state, 
+			t_time *time)
 {
 	int			i;
 	pthread_t	moderator_id;
 
 	i = -1;
-	
 	while (++i < philo->amount_philo)
 	{
 		init_philo(philo, forks, i);
@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 	error_check(av);
 	philo = malloc(sizeof(t_philo) * atoi(av[1]));
 	forks = malloc(sizeof(t_forks) * atoi(av[1]));
-	state = malloc(sizeof(t_program_state)); //no olvidar, si tiene lock tengo que asignarle memoria? 
+	state = malloc(sizeof(t_program_state));
 	if (!philo || !forks || !state)
 		return (EXIT_FAILURE);
 	init_data(av, philo, forks, state);

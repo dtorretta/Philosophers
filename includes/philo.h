@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/09/03 17:05:53 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/09/03 17:05:53 by dtorrett         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 17:16:47 by dtorrett          #+#    #+#             */
+/*   Updated: 2024/10/07 17:16:47 by dtorrett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +32,8 @@ typedef struct s_time
 
 typedef struct s_program_state
 {
-	bool	terminate;
-	pthread_mutex_t	lock; //new
+	bool			terminate;
+	pthread_mutex_t	lock;
 }	t_program_state;
 
 typedef struct s_forks
@@ -64,7 +61,7 @@ typedef struct s_philo
 	bool			terminate;
 	t_program_state	*status;
 	t_time			*time;
-	pthread_mutex_t	lock; //VER
+	pthread_mutex_t	lock;
 }	t_philo;
 
 /*ERRORS*/
@@ -74,19 +71,20 @@ void	error_check(char **av);
 
 /*INIT*/
 void	init_philo(t_philo *philo, t_forks *forks, int i);
-void	init_data(char **av, t_philo *philo, t_forks *forks, t_program_state *state);
+void	init_data(char **av, t_philo *philo, t_forks *forks, 
+			t_program_state *state);
 long	init_time(void);
 long	get_time(t_time *time);
 
 /*UTILS*/
-int     check_status(t_philo *philo, t_program_state *state, int i);
-int     check_status2(t_philo *philo);
+int		check_status(t_philo *philo, t_program_state *state, int i);
+int		check_status2(t_philo *philo);
 int		ft_atoi(const char *nptr);
 void	ft_putendl_fd(char *s, int fd);
-void    ft_free(t_philo *philo, t_forks *forks, t_program_state *state);
+void	ft_free(t_philo *philo, t_forks *forks, t_program_state *state);
 
 /*ONE PHILO*/
-int	    one_philo(t_philo *philo, t_forks *forks, t_program_state *state);
+int		one_philo(t_philo *philo, t_forks *forks, t_program_state *state);
 
 /*MODERATOR*/
 void	*ft_moderator(void *arg);

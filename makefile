@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 18:29:14 by dtorrett          #+#    #+#              #
-#    Updated: 2024/10/07 12:51:50 by marvin           ###   ########.fr        #
+#    Updated: 2024/10/07 17:15:44 by dtorrett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = philo
 # Compiler and Flags
 CC = cc
 
-# add -fsanitize=thread or -fsanitize=address to check data races
+# add -fsanitize=address to check data races
 CFLAGS = -Wall -Wextra -Werror
 
 # Includes
@@ -34,8 +34,7 @@ SRC_FILES = 	$(SRC_PATH)main.c \
 
 # Object files
 OBJ_PATH = objects/
-#OBJ	= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
-OBJ = $(SRC_FILES:.c=.o)
+OBJ = $(SRC_FILES:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
 # Build rules
 all: $(NAME)

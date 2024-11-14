@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dtorrett <dtorrett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:39:04 by dtorrett          #+#    #+#             */
-/*   Updated: 2024/10/07 12:29:53 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:17:54 by dtorrett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void print_message (t_philo *philo, int i)
+static void	print_message(t_philo *philo, int i)
 {
 	pthread_mutex_lock(&philo->status->lock);
 	if (i == 1)
-		printf("%ld %d has taken a fork\n", get_time(philo->time), philo->id );
-	else if (i== 2)
+		printf("%ld %d has taken a fork\n", get_time(philo->time), philo->id);
+	else if (i == 2)
 		printf("%ld %d is eating\n", get_time(philo->time), philo->id);
 	pthread_mutex_unlock(&philo->status->lock);
 }
@@ -25,32 +25,32 @@ static void print_message (t_philo *philo, int i)
 //Before each movement, it checks if the moderator has set the termination flag.
 //If the flag is false, it continues until it has taken both forks and eaten.
 //take_forks will return 1 if a philosopher dies.
-static int take_forks(t_philo *philo, t_program_state *state)
+static int	take_forks(t_philo *philo, t_program_state *state)
 {
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->lock);
-		if (check_status(philo, state, 1)) //lefyt
-			return(1);
+		if (check_status(philo, state, 1))
+			return (1);
 		print_message(philo, 1);
 		pthread_mutex_lock(&philo->right_fork->lock);
 		if (check_status(philo, state, 3))
-			return(1);
+			return (1);
 		print_message(philo, 1);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->right_fork->lock);
 		if (check_status(philo, state, 2))
-			return(1);
+			return (1);
 		print_message(philo, 1);
 		pthread_mutex_lock(&philo->left_fork->lock);
 		if (check_status(philo, state, 3))
-			return(1);
+			return (1);
 		print_message(philo, 1);
 	}
 	print_message(philo, 2);
-	return(0);
+	return (0);
 }
 
 // Depending on whether the Philosopher is in an odd or even position, 
@@ -59,11 +59,10 @@ static int take_forks(t_philo *philo, t_program_state *state)
 static int	ft_eat(t_philo *philo, t_program_state *state)
 {
 	usleep(100);
-	if(take_forks(philo, state))
-		return(1);
+	if (take_forks(philo, state))
+		return (1);
 	pthread_mutex_lock(&philo->lock);
 	philo->last_meal_time = get_time(philo->time);
-	philo->meals++;
 	pthread_mutex_unlock(&philo->lock);
 	usleep(philo->eat * 1000 + 100);
 	if (philo->id % 2 == 0)
@@ -77,7 +76,7 @@ static int	ft_eat(t_philo *philo, t_program_state *state)
 		pthread_mutex_unlock(&philo->right_fork->lock);
 		usleep(100);
 		pthread_mutex_unlock(&philo->left_fork->lock);
-	}	
+	}
 	return (0);
 }
 
@@ -97,6 +96,7 @@ static void	*ft_routine(t_philo *philo)
 			break ;
 		pthread_mutex_lock(&philo->status->lock);
 		printf("%ld %d is sleeping\n", get_time(philo->time), philo->id);
+		philo->meals++;
 		pthread_mutex_unlock(&philo->status->lock);
 		usleep(philo->sleep * 1000 + 200);
 		if (check_status2 (philo))
